@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
-ENV MAIN_PATH=/usr/local/bin/python_dev
+ENV MAIN_PATH=/usr/local/bin/census_data
 ENV LIBS_PATH=${MAIN_PATH}/libs
 ENV CONFIG_PATH=${MAIN_PATH}/config
 ENV NOTEBOOK_PATH=${MAIN_PATH}/notebooks
