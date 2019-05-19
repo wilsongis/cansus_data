@@ -93,4 +93,5 @@ target/
 .mypy_cache/
 
 # Local Variables
-localvars
+/src/localvars
+
