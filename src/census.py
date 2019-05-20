@@ -14,12 +14,9 @@ laZips = open('laZips.txt', 'r').readlines()
 laZips = [z.replace('\n', '') for z in laZips]
 laZips = ','.join(laZips)
 
-#put your census API key here
-apiKey = "YOUR_API_KEY"
-
 #construct the API call we will use
 baseAPI = "https://api.census.gov/data/2017/acs/acs5?key=%s&get=B01003_001E&for=zip%%20code%%20tabulation%%20area:%s" 
-calledAPI = baseAPI % (apiKey, laZips)
+calledAPI = baseAPI % (localvars.apiKey, laZips)
 
 #call the API and collect the response
 response = requests.get(calledAPI)
