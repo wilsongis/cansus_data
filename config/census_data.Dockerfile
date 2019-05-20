@@ -43,7 +43,8 @@ RUN pip3 install --upgrade pip \
     jupyter \
     jupyterlab \
     pycrypto \
-    pandas
+    pandas \
+    lxml
 
 RUN apt-get install -y bash nodejs npm \
     && pip3 install bash_kernel \
