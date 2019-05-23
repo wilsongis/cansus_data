@@ -1,34 +1,59 @@
 #manipulate dataframes in python
 import pandas as pd
-
-import localvars
+import sys
 
 #make API calls with python
 import requests
 
+import localvars
+
 #allows us to store results of API call cleanly
 import json
 
-#get list of all zipcodes in Los Angeles County separated by commas
-laZips = open('laZips.txt', 'r').readlines()
-laZips = [z.replace('\n', '') for z in laZips]
-laZips = ','.join(laZips)
+# List of Years
+strYears =["2013", "2014", "2015", "2016", "2017"]
 
-#construct the API call we will use
-baseAPI = "https://api.census.gov/data/2017/acs/acs5?key=%s&get=B01003_001E&for=zip%%20code%%20tabulation%%20area:%s" 
-calledAPI = baseAPI % (localvars.apiKey, laZips)
+tables = pd.read_csv("../src/data/tables.csv").to_dict(orient="row")
+tablesdf = pd.DataFrame(tables)
+tablesdf2 = tablesdf.set_index("table", drop = False)
+for index, row in tablesdf2.iterrows():
+    tablename= row['table']
+    #print("value: " + tablesdf2.loc[tablename,'file'])
+    # Using for loop 
+    metric = pd.DataFrame() #creates a new dataframe that's empty
+    for i in strYears: 
 
-#call the API and collect the response
-response = requests.get(calledAPI)
+        #construct the API call we will use
+        baseAPI = "https://api.census.gov/data/%s/acs/acs5?get=%s&for=tract:*&in=state:47%%20county:125&key=%s" 
 
-#load the response into a JSON, ignoring the first element which is just field labels
-formattedResponse = json.loads(response.text)[1:]
+        calledAPI = (baseAPI % (i, row['table'], localvars.apiKey))
 
-#flip the order of the response from [population, zipcode] -> [zipcode, population]
-formattedResponse = [item[::-1] for item in formattedResponse]
+        #call the API and collect the response
+        response = requests.get(calledAPI)
 
-#store the response in a dataframe
-laZipPopulations = pd.DataFrame(columns=['zipcode', 'population'], data=formattedResponse)
+        #load the response into a JSON, ignoring the first element which is just field labels
+        try:
+            formattedResponse = json.loads(response.text)[1:]
 
-#save that dataframe to a CSV spreadsheet
-laZipPopulations.to_csv('laZipPopulations.csv', index=False)
+            #flip the order of the response from [population, zipcode] -> [zipcode, population]
+            formattedResponse = [item[::-1] for item in formattedResponse]
+
+            #store the response in a dataframe
+            strColYear = "y_" + i
+
+            metrictemp = pd.DataFrame(columns=['id', '2', '3', strColYear], data=formattedResponse)
+            del metrictemp['2']
+            del metrictemp['3']
+            if i == "2013":
+                metric=metrictemp
+            else: 
+                metric = metric.merge(metrictemp, on='id', how='outer')
+        except:
+            print("Unexpected error:", sys.exc_info()[0])
+            raise
+
+    #save that dataframe to a CSV spreadsheet
+    strFile = "../src/data/ProcessedData/" + row['file'] + ".csv"
+    metric.to_csv(strFile, index=False)
+    print("Output: " + strFile)
+
