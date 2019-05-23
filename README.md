@@ -1,8 +1,10 @@
-# Python Dev Environment
+# Census Data Processor based on [Python Dev Environment](https://github.com/wilsongis/census_data)
 
 ==============================
 
-## A unified python development environment I can use on both Mac and Windows
+## A project to parse the American Community Survey 5-Year Data
+
+Project processed the Census ACS for use in the [Quality of Life Dashboard](https://github.com/tobinbradley/quality-of-life-dashboard)
 
 ## Features:
 
@@ -11,7 +13,7 @@
 - Jupyter and JupyterLab
 
 
-Based from [How to Setup Your JupyterLab Project Environment](https://towardsdatascience.com/how-to-setup-your-jupyterlab-project-environment-74909dade29b)
+Based on [How to Setup Your JupyterLab Project Environment](https://towardsdatascience.com/how-to-setup-your-jupyterlab-project-environment-74909dade29b)
 
 To Run Environment:
 
