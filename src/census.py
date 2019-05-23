@@ -5,8 +5,7 @@ import sys
 #make API calls with python
 import requests
 
-#sys.path.insert(0, '/path/to/application/app/folder') used to import 
-# local python file, in this case local keys
+# sys.path.insert(0, '/path/to/application/app/folder') used to import local python file, in this case local keys
 sys.path.insert(0, '../src/')
 import localvars
 
@@ -14,7 +13,10 @@ import localvars
 import json
 
 # List of Years
-strYears =["2010", "2013", "2014", "2015", "2016", "2017"]
+strYears =["2010","2013", "2014", "2015", "2016", "2017"]
+
+intState = 47
+intCounty = 125
 
 tables = pd.read_csv("../src/data/tables.csv").to_dict(orient="row")
 tablesdf = pd.DataFrame(tables)
@@ -27,9 +29,9 @@ for index, row in tablesdf2.iterrows():
     for i in strYears: 
 
         #construct the API call we will use
-        baseAPI = "https://api.census.gov/data/%s/acs/acs5?get=%s&for=tract:*&in=state:47%%20county:125&key=%s" 
+        baseAPI = "https://api.census.gov/data/%s/acs/acs5?get=%s&for=tract:*&in=state:%i%%20county:%i&key=%s" 
 
-        calledAPI = (baseAPI % (i, row['table'], localvars.apiKey))
+        calledAPI = (baseAPI % (i, row['table'], intState, intCounty, localvars.apiKey))
 
         #call the API and collect the response
         response = requests.get(calledAPI)
