@@ -5,13 +5,16 @@ import sys
 #make API calls with python
 import requests
 
+#sys.path.insert(0, '/path/to/application/app/folder') used to import 
+# local python file, in this case local keys
+sys.path.insert(0, '../src/')
 import localvars
 
 #allows us to store results of API call cleanly
 import json
 
 # List of Years
-strYears =["2013", "2014", "2015", "2016", "2017"]
+strYears =["2010", "2013", "2014", "2015", "2016", "2017"]
 
 tables = pd.read_csv("../src/data/tables.csv").to_dict(orient="row")
 tablesdf = pd.DataFrame(tables)
@@ -44,7 +47,7 @@ for index, row in tablesdf2.iterrows():
             metrictemp = pd.DataFrame(columns=['id', '2', '3', strColYear], data=formattedResponse)
             del metrictemp['2']
             del metrictemp['3']
-            if i == "2013":
+            if i == "2010":
                 metric=metrictemp
             else: 
                 metric = metric.merge(metrictemp, on='id', how='outer')
