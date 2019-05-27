@@ -1,0 +1,29 @@
+{
+  "m1": {
+    "metric": "1",
+    "table": "B01001_001E",
+    "category": "Totals",
+    "label": "Total",
+    "title": "Total Population",
+    "type": "sum",
+    "subtitle": "Population Counts"
+  },
+  "m2": {
+    "metric": "2",
+    "table": "B01001_002E",
+    "category": "Totals",
+    "label": "Totals",
+    "title": "Total Males",
+    "type": "sum",
+    "subtitle": "Total Male Population"
+  },
+  "m3": {
+    "metric": "3",
+    "table": "B01001_026E",
+    "category": "Totals",
+    "label": "Totals",
+    "title": "Total Females",
+    "type": "sum",
+    "subtitle": "Total Female Population"
+  }
+}
